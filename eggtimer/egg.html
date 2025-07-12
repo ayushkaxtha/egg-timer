@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Egg Timer</title>
+  <a href="egg.html"></a>
+  <link rel="stylesheet" href="egg.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 class="head">Egg Timer <3 </h1>
+    
+    <div class="innercontainer">
+    <h1>Let's time your egg!!</h1>
+    <button id="startBtn">Start</button>
+
+    <div class="egg-options" id="eggOptions" style="display: none;">
+      <div data-time="3">
+        <img src="images/half boiled.png" alt="Soft Boiled" />
+        <p>Soft Boiled</p>
+      </div>
+      <div data-time="6">
+        <img src="images/boiled egg.png" alt="Hard Boiled" />
+        <p>Hard Boiled</p>
+      </div>
+      <div data-time="4">
+        <img src="images/boiled egg.png" alt="Fried Egg" />
+        <p>Fried Egg</p>
+      </div>
+      <div data-time="5">
+        <img src="image/scrambled egg.png" alt="Scrambled Egg" />
+        <p>Scrambled Egg</p>
+      </div>
+    </div>
+
+    <div class="timer" id="timer">00:00</div>
+  </div>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const eggOptions = document.getElementById('eggOptions');
+    const timerDisplay = document.getElementById('timer');
+
+    startBtn.addEventListener('click', () => {
+      startBtn.style.display = 'none';
+      eggOptions.style.display = 'flex';
+    });
+
+    eggOptions.querySelectorAll('div').forEach(option => {
+      option.addEventListener('click', () => {
+        const minutes = parseInt(option.getAttribute('data-time'));
+        let seconds = minutes * 60;
+        eggOptions.style.display = 'none';
+        timerDisplay.style.display = 'block';
+
+        const interval = setInterval(() => {
+          const min = Math.floor(seconds / 60);
+          const sec = seconds % 60;
+          timerDisplay.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+          seconds--;
+
+          if (seconds < 0) {
+            clearInterval(interval);
+            timerDisplay.textContent = "Done!";
+          }
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>
